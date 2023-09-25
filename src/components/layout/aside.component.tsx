@@ -11,13 +11,13 @@ export function Aside() {
         >
           <i className="ri-earth-line text-2xl"></i>
         </Link>
-        <Link
+        {/* <Link
           active-class="!text-violet-500"
           href="/marketplace"
           className="flex h-12 w-12 items-center justify-center rounded-full hover:bg-neutral-800"
         >
           <i className="ri-store-2-line text-2xl"></i>
-        </Link>
+        </Link> */}
         <Link
           id="inventory"
           active-class="!text-violet-500"
@@ -34,14 +34,14 @@ export function Aside() {
         >
           <i className="ri-dropbox-fill text-2xl"></i>
         </Link>
-        <Link
+        {/* <Link
           id="vote"
           active-class="!text-violet-500"
           href="/vote"
           className="flex h-12 w-12 items-center justify-center rounded-full hover:bg-neutral-800"
         >
           <i className="ri-chat-poll-fill text-2xl"></i>
-        </Link>
+        </Link> */}
         <Link
           href="/profile"
           active-class="!text-violet-500"
@@ -49,13 +49,13 @@ export function Aside() {
         >
           <i className="ri-user-line text-2xl"></i>
         </Link>
-        <Link
+        {/* <Link
           href="/reference"
           active-class="!text-violet-500"
           className="flex h-12 w-12 items-center justify-center rounded-full hover:bg-neutral-800"
         >
           <i className="ri-shining-line text-2xl"></i>
-        </Link>
+        </Link> */}
         <Link
           href="/top"
           active-class="!text-violet-500"

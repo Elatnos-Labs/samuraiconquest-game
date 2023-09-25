@@ -79,8 +79,8 @@ export function LandCard() {
             {game.samurai?.Status == 1
               ? 'In War'
               : game.samurai?.Status == 2
-              ? 'Camp'
-              : 'Available'}
+                ? 'Camp'
+                : 'Available'}
           </p>
           {(game.samurai?.Status == 1 || game.samurai?.Status == 2) && (
             <p>
@@ -103,7 +103,7 @@ export function LandCard() {
             <div className="h-2 rounded-full bg-neutral-800">
               <div
                 className="stats h-2 rounded-full bg-red-500"
-                style={{ maxWidth: game.samurai.Attack * 5 + '%' }}
+                style={{ maxWidth: game.samurai.Attack * 10 + '%' }}
               ></div>
             </div>
           </div>
@@ -114,31 +114,31 @@ export function LandCard() {
             </span>
             <div className="h-2 rounded-full bg-neutral-800">
               <div
-                className="stats h-2 rounded-full bg-blue-500"
-                style={{ maxWidth: game.samurai.Defence * 5 + '%' }}
+                className="stats h-2 rounded-full bg-green-500"
+                style={{ maxWidth: game.samurai.Defence * 10 + '%' }}
               ></div>
             </div>
           </div>
           <div className="col-span-1">
             <span className="mb-1 flex items-center text-yellow-500">
-              <i className="ri-sword-fill mr-1"></i>{' '}
+              <i className="ri-fire-fill mr-1"></i>{' '}
               <span className="text-sm">{game.samurai.Chakra}</span>
             </span>
             <div className="h-2 rounded-full bg-neutral-800">
               <div
-                className="stats h-2 rounded-full bg-yellow-500"
-                style={{ maxWidth: game.samurai.Chakra * 5 + '%' }}
+                className="stats h-2 rounded-full bg-blue-500"
+                style={{ maxWidth: game.samurai.Chakra * 10 + '%' }}
               ></div>
             </div>
           </div>
           <div className="col-span-1">
             <span className="mb-1 flex items-center text-green-500">
-              <i className="ri-sword-fill mr-1"></i>{' '}
+              <i className="ri-flashlight-fill mr-1"></i>{' '}
               <span className="text-sm">{game.samurai.CurrentAgility}</span>
             </span>
             <div className="h-2 rounded-full bg-neutral-800">
               <div
-                className="stats h-2 rounded-full bg-green-500"
+                className="stats h-2 rounded-full bg-yellow-500"
                 style={{ maxWidth: game.samurai.CurrentAgility * 5 + '%' }}
               ></div>
             </div>
@@ -420,7 +420,7 @@ export function Map() {
           deck: deckIDS,
           sideMeshes: sideMeshes,
           setSideMeshes: setSideMeshes,
-          onSideSelect: (scene, mesh) => {},
+          onSideSelect: (scene, mesh) => { },
           eventEmitter,
         });
         setLocations([...locations]);
@@ -499,10 +499,10 @@ export function Map() {
                       (game.land.clan == 1
                         ? 'bg-red-300'
                         : game.land.clan == 2
-                        ? 'bg-blue-300'
-                        : game.land.clan == 3
-                        ? 'bg-purple-300'
-                        : 'bg-white')
+                          ? 'bg-blue-300'
+                          : game.land.clan == 3
+                            ? 'bg-purple-300'
+                            : 'bg-white')
                     }
                   >
                     <i className="ri-sword-fill text-lg text-black"></i>
@@ -520,7 +520,7 @@ export function Map() {
                   <div className="flex items-end justify-between rounded-xl ">
                     <span className="text-sm text-white/80">Status:</span>
                     <span className="text-base">
-                      {game.land.war_id == 0 ? 'Peace' : 'War'}
+                      {game.land.attackerClan == 0 ? 'Peace' : 'War'}
                     </span>
                   </div>
                 </div>
@@ -646,7 +646,7 @@ export function Map() {
             </div>
           )}
 
-          {game.land.war_id != 0 && game.land.uri && (
+          {game.land.war_id != 0 && game.land.uri != "xx.com/1" && (
             <div className="col-span-1 mt-6 h-32">
               <img
                 className="h-full w-full rounded-xl"
@@ -656,7 +656,7 @@ export function Map() {
             </div>
           )}
 
-          {game.land.war_id == 0 && (
+          {game.land.attackerClan != 0 && (
             <>
               <div className="mt-6">
                 <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl bg-neutral-950/50 px-6 py-6">
@@ -732,8 +732,8 @@ export function Map() {
                 game.land &&
                 game.samurai?.Location == game.land.id &&
                 game.land.id !=
-                  game.clans.find((x) => x.ID == user.user.clan)
-                    ?.baseLocation &&
+                game.clans.find((x) => x.ID == user.user.clan)
+                  ?.baseLocation &&
                 game.samurai.DeploymentTime == 0 && (
                   <DeployCommandButton></DeployCommandButton>
                 )}
@@ -756,15 +756,15 @@ export function Map() {
                   game.clans.find((x) => x.ID == user.user.clan)
                     ?.baseLocation ||
                   game.land.id ==
-                    game.clans.find((x) => x.ID == user.user.clan)
-                      ?.baseLocation) && (
+                  game.clans.find((x) => x.ID == user.user.clan)
+                    ?.baseLocation) && (
                   <MoveCommandButton></MoveCommandButton>
                 )}
               {game.samurai &&
                 game.land &&
                 game.samurai.Location == game.land.id &&
                 game.clans.find((x) => x.ID == user.user.clan)?.baseLocation ==
-                  game.samurai?.Location && (
+                game.samurai?.Location && (
                   <HealCommandButton></HealCommandButton>
                 )}
               {game.samurai &&
@@ -892,12 +892,12 @@ async function setup({
     manager.onStart = function (url, itemsLoaded, itemsTotal) {
       console.log(
         'Started loading file: ' +
-          url +
-          '.\nLoaded ' +
-          itemsLoaded +
-          ' of ' +
-          itemsTotal +
-          ' files.',
+        url +
+        '.\nLoaded ' +
+        itemsLoaded +
+        ' of ' +
+        itemsTotal +
+        ' files.',
       );
 
       document.getElementById('loading-area').classList.remove('hidden');
@@ -919,12 +919,12 @@ async function setup({
     manager.onProgress = function (url, itemsLoaded, itemsTotal) {
       console.log(
         'Loading file: ' +
-          url +
-          '.\nLoaded ' +
-          itemsLoaded +
-          ' of ' +
-          itemsTotal +
-          ' files.',
+        url +
+        '.\nLoaded ' +
+        itemsLoaded +
+        ' of ' +
+        itemsTotal +
+        ' files.',
       );
 
       document.getElementById('loading-text').innerHTML =
@@ -1185,7 +1185,7 @@ async function setup({
       });
     });
 
-    eventEmitter.on('selectAgent', (id: number) => {});
+    eventEmitter.on('selectAgent', (id: number) => { });
 
     function onMapClick(event) {
       // Fare koordinatlarını ekran boyutuna göre hesaplayın

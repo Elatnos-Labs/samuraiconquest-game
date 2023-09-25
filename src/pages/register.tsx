@@ -9,6 +9,7 @@ import localFont from 'next/font/local';
 import { useAuth } from '@/hooks/useAuth';
 import { LoginConnectButton } from '@/components/rainbow/login-connect-button.component';
 import Swal from 'sweetalert2';
+import Link from 'next/link';
 
 const myFont = localFont({
   src: '../assets/font.otf',
@@ -75,18 +76,10 @@ export default function Register() {
         </div>
         <div className="rounded-md bg-neutral-950/20 px-8 py-6 backdrop-blur-3xl">
           <div className={'text-4xl text-white ' + myFont.className}>
-            About Us
+            Samurai Conquest
           </div>
           <p className="mt-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur
-            dolorem quasi enim quisquam aperiam! Esse accusamus magni amet ea.
-            Illum, nam aperiam. Blanditiis minima quo doloribus ipsam,
-            cupiditate veniam exercitationem accusantium ea iure rerum assumenda
-            numquam itaque quae impedit atque sint possimus suscipit
-            reprehenderit! Autem blanditiis accusamus molestiae architecto
-            tempora nam quod aut asperiores neque omnis vero veniam, sint facere
-            tenetur sunt deleniti, similique distinctio dolore rerum quibusdam
-            explicabo commodi eaque consequatur.
+            Legendary battle where strategy and NFT meet! Embark on an adventure full of politics and strategy in this game where each kingdom has its own community. Kingdoms act together with their communities as they develop Defensive, Offensive and Farming strategies on the hexagonal game map. Players must regularly move to certain hexagons, defending, farming or attacking territories, as if moving chess pieces. In the game, kingdoms must manage their resources effectively and capture the map. Once a hexagon is captured, it must be both defended and developed. The main goal in the universe is not just to attack, but to develop a strategy.
           </p>
         </div>
         <div className="col-span-2 flex items-center justify-center rounded-md border border-violet-500/10 bg-neutral-950/20 px-8 py-6 backdrop-blur-3xl">
@@ -120,24 +113,55 @@ export default function Register() {
           )}
         </div>
         <div className="z-50 col-span-3 flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50">
+          <Link
+            active-class="!text-violet-500"
+            href="https://linktr.ee/samuraiconquest"
+            target="_blank" rel="noopener noreferrer"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
+          >
+            <i className="ri-links-line text-2xl"></i>
+          </Link>
+          <Link
+            active-class="!text-violet-500"
+            href="https://samuraiconquest.com/"
+            target="_blank" rel="noopener noreferrer"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
+          >
+            <i className="ri-pages-fill text-2xl"></i>
+          </Link>
+          <Link
+            active-class="!text-violet-500"
+            href="https://twitter.com/ConquestSamurai"
+            target="_blank" rel="noopener noreferrer"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
+          >
             <i className="ri-twitter-fill text-2xl"></i>
-          </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50">
-            <i className="ri-github-fill text-2xl"></i>
-          </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50">
+          </Link>
+          <Link
+            active-class="!text-violet-500"
+            href="https://discord.gg/wkdUvWEv"
+            target="_blank" rel="noopener noreferrer"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
+          >
             <i className="ri-discord-fill text-2xl"></i>
-          </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50">
-            <i className="ri-coin-fill text-2xl"></i>
-          </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50">
-            <i className="ri-facebook-fill text-2xl"></i>
-          </div>
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50">
-            <i className="ri-instagram-fill text-2xl"></i>
-          </div>
+          </Link>
+          <Link
+            active-class="!text-violet-500"
+            href="https://t.me/samuraiconquestofficial"
+            target="_blank" rel="noopener noreferrer"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
+          >
+            <i className="ri-telegram-line text-2xl"></i>
+          </Link>
+          <Link
+            active-class="!text-violet-500"
+            href="https://drive.google.com/file/d/1bGhG1iwm43-XcNAl1Z7V5quyUv13jfkd/view"
+            target="_blank" rel="noopener noreferrer"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
+          >
+            <i className="ri-newspaper-fill text-2xl"></i>
+          </Link>
+
           <div className="relative z-40 ml-auto flex h-12 items-center justify-center overflow-hidden rounded-full bg-neutral-950/50 px-32">
             <div
               style={{

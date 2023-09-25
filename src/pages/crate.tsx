@@ -245,14 +245,10 @@ export default function Crate() {
   return (
     <section className="mx-auto mb-8 mt-32 flex max-w-screen-2xl flex-col items-center px-8">
       <div className="rounded-md bg-neutral-950/50 px-8 py-6">
-        <h1 className="mb-4 text-2xl font-semibold">Boxs</h1>
-        <p className="w-1/2 text-sm">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cum,
-          officiis sit adipisci modi eius ad atque saepe et numquam rem quia id
-          recusandae totam delectus fuga alias molestias, blanditiis molestiae
-          maxime ea beatae, harum magni vel? Hic fugiat cupiditate architecto
-          at? Incidunt distinctio assumenda veritatis, blanditiis explicabo
-          libero enim rerum!
+        <h1 className="mb-4 text-2xl font-semibold">Mysterious cards</h1>
+        <p className="w-1/2 text-lg">
+          The Samurai NFTs that emerge from within are poised to become the stars of the battle game!
+          This mysterious card invites you to forge bonds with the game's fiercest and most reliable comrades. Join forces and embark on epic adventures together!
         </p>
       </div>
       <div className="relative my-6 grid min-h-[512px] w-full grid-cols-3 gap-6">
@@ -277,8 +273,7 @@ export default function Crate() {
               <div className="mt-2 flex flex-col text-center">
                 <h5 className="text-xl font-medium">Legendary Card</h5>
                 <p className="mt-4 text-white/50">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Beatae libero maiores blanditiis accusamus molestiae.
+                  This card opens the door for you to explore the game's mightiest and most distinctive characters.
                 </p>
                 <button
                   onClick={handleMint}

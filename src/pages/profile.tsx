@@ -162,7 +162,7 @@ export default function Profile() {
           <div className="flex w-full flex-col rounded-xl border border-violet-500/10 bg-neutral-900/20 px-6 py-4 backdrop-blur-xl">
             <div className="mb-2 flex w-full flex-row items-center justify-between">
               <h2 className="w-full text-left text-xl font-medium">
-                Your Best Agents
+                Your Fellows
               </h2>
             </div>
             <div className="grid grid-cols-3 gap-4">
@@ -190,7 +190,7 @@ export default function Profile() {
         </div>
       </div>
 
-      <div className="col-span-2 lg:col-span-1">
+      {/* <div className="col-span-2 lg:col-span-1">
         <div className="flex flex-col gap-4">
           <div className="flex w-full flex-col items-center rounded-xl border border-violet-500/10 bg-neutral-900/20 px-6 py-4 backdrop-blur-xl">
             <h2 className="w-full text-left text-xl font-medium">
@@ -272,8 +272,8 @@ export default function Profile() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div> 
+      </div>*/}
     </div>
   );
 }

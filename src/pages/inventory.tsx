@@ -121,10 +121,7 @@ export default function Inventory() {
         <div className="inventory-left-in">
           <h1 className="text-2xl font-semibold text-white">Inventory</h1>
           <p className="mt-2 w-full text-sm text-neutral-300 lg:w-2/3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam quaerat
-            dolore veniam maxime laudantium modi quos debitis commodi architecto
-            inventore distinctio esse itaque nostrum tempora, deserunt, sed
-            possimus? Cumque, mollitia.
+            Unleash the power of the Samurai onto the battlefield! Harnessing their unparalleled combat skills and rich heritage, these noble warriors are poised to become legendary forces in the heat of battle. Now, beckon forth these honorable fighters and transform the gleam of their swords into an epic saga that will crown your triumph!
           </p>
 
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -146,9 +143,8 @@ export default function Inventory() {
         </div>
       </div>
       <div
-        className={`fixed right-0 top-0 h-full w-2/3 lg:sticky lg:w-1/3 ${
-          active ? 'pointer-events-auto' : 'pointer-events-none'
-        }`}
+        className={`fixed right-0 top-0 h-full w-2/3 lg:sticky lg:w-1/3 ${active ? 'pointer-events-auto' : 'pointer-events-none'
+          }`}
         ref={modal}
       >
         {active && (

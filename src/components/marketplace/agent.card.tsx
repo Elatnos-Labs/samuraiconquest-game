@@ -22,48 +22,48 @@ export function AgentCard({ index, onClick }) {
         <div className="flex flex-col">
           <span className="mb-1 flex items-center text-red-500">
             <i className="ri-sword-fill mr-1"></i>{' '}
-            <span className="text-sm">32</span>
+            <span className="text-sm">8</span>
           </span>
           <div className="h-2 rounded-full bg-neutral-800">
             <div
               className="stats h-2 rounded-full bg-red-500"
-              style={{ maxWidth: '72%' }}
+              style={{ maxWidth: '80%' }}
             ></div>
           </div>
         </div>
         <div className="flex flex-col">
           <span className="mb-1 flex items-center text-blue-500">
             <i className="ri-shield-fill mr-1"></i>{' '}
-            <span className="text-sm">55</span>
+            <span className="text-sm">8</span>
           </span>
           <div className="h-2 rounded-full bg-neutral-800">
             <div
               className="stats h-2 rounded-full bg-blue-500"
-              style={{ maxWidth: '72%' }}
+              style={{ maxWidth: '80%' }}
             ></div>
           </div>
         </div>
         <div className="flex flex-col">
           <span className="mb-1 flex items-center text-yellow-500">
-            <i className="ri-sword-fill mr-1"></i>{' '}
-            <span className="text-sm">72</span>
+            <i className="ri-fire-fill mr-1"></i>{' '}
+            <span className="text-sm">8</span>
           </span>
           <div className="h-2 rounded-full bg-neutral-800">
             <div
               className="stats h-2 rounded-full bg-yellow-500"
-              style={{ maxWidth: '72%' }}
+              style={{ maxWidth: '80%' }}
             ></div>
           </div>
         </div>
         <div className="flex flex-col">
           <span className="mb-1 flex items-center text-green-500">
-            <i className="ri-sword-fill mr-1"></i>{' '}
-            <span className="text-sm">72</span>
+            <i className="ri-flashlight-fill mr-1"></i>{' '}
+            <span className="text-sm">8</span>
           </span>
           <div className="h-2 rounded-full bg-neutral-800">
             <div
               className="stats h-2 rounded-full bg-green-500"
-              style={{ maxWidth: '72%' }}
+              style={{ maxWidth: '80%' }}
             ></div>
           </div>
         </div>
@@ -74,7 +74,7 @@ export function AgentCard({ index, onClick }) {
           <span className="text-neutral-500 group-hover:text-violet-500">
             Current Bid
           </span>
-          <span className="font-semibold text-neutral-300">5.54 Eth</span>
+          <span className="font-semibold text-neutral-300">1.35 BNB</span>
         </div>
       </div>
 

@@ -49,12 +49,12 @@ export function AgentCard({
         <div className="flex flex-col">
           <span className="mb-1 flex items-center text-red-500">
             <i className="ri-sword-fill mr-1"></i>{' '}
-            <span className="text-sm">{agility}</span>
+            <span className="text-sm">{attack}</span>
           </span>
           <div className="h-2 rounded-full bg-neutral-700">
             <div
               className="stats h-2 rounded-full bg-red-500"
-              style={{ maxWidth: `${agility * 5}%` }}
+              style={{ maxWidth: `${attack * 10}%` }}
             ></div>
           </div>
         </div>
@@ -65,32 +65,32 @@ export function AgentCard({
           </span>
           <div className="h-2 rounded-full bg-neutral-700">
             <div
-              className="stats h-2 rounded-full bg-blue-500"
-              style={{ maxWidth: `${defence * 5}%` }}
+              className="stats h-2 rounded-full bg-green-500"
+              style={{ maxWidth: `${defence * 10}%` }}
             ></div>
           </div>
         </div>
         <div className="flex flex-col">
           <span className="mb-1 flex items-center text-yellow-500">
-            <i className="ri-sword-fill mr-1"></i>{' '}
-            <span className="text-sm">{attack}</span>
+            <i className="ri-fire-fill mr-1"></i>{' '}
+            <span className="text-sm">{chakra}</span>
           </span>
           <div className="h-2 rounded-full bg-neutral-700">
             <div
-              className="stats h-2 rounded-full bg-yellow-500"
-              style={{ maxWidth: `${attack * 5}%` }}
+              className="stats h-2 rounded-full bg-blue-500"
+              style={{ maxWidth: `${chakra * 10}%` }}
             ></div>
           </div>
         </div>
         <div className="flex flex-col">
           <span className="mb-1 flex items-center text-green-500">
-            <i className="ri-sword-fill mr-1"></i>{' '}
-            <span className="text-sm">{chakra}</span>
+            <i className="ri-flashlight-fill mr-1"></i>{' '}
+            <span className="text-sm">{agility}</span>
           </span>
           <div className="h-2 rounded-full bg-neutral-700">
             <div
-              className="stats h-2 rounded-full bg-green-500"
-              style={{ maxWidth: `${chakra * 5}%` }}
+              className="stats h-2 rounded-full bg-yellow-500"
+              style={{ maxWidth: `${agility * 5}%` }}
             ></div>
           </div>
         </div>
