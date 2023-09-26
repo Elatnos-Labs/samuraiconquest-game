@@ -119,12 +119,12 @@ export function CrateCard({ minted, setMint, id }: any) {
               <div className="flex flex-col">
                 <span className="mb-1 flex items-center text-red-500">
                   <i className="ri-sword-fill mr-1"></i>{' '}
-                  <span className="text-sm">{data.attributes[3].value}</span>
+                  <span className="text-sm">{data.attributes[0].value}</span>
                 </span>
                 <div className="h-2 rounded-full bg-neutral-800">
                   <div
                     className="stats h-2 rounded-full bg-red-500"
-                    style={{ maxWidth: `${data.attributes[3].value * 5}%` }}
+                    style={{ maxWidth: `${data.attributes[0].value * 10}%` }}
                   ></div>
                 </div>
               </div>
@@ -135,32 +135,32 @@ export function CrateCard({ minted, setMint, id }: any) {
                 </span>
                 <div className="h-2 rounded-full bg-neutral-800">
                   <div
-                    className="stats h-2 rounded-full bg-blue-500"
-                    style={{ maxWidth: `${data.attributes[1].value * 5}%` }}
+                    className="stats h-2 rounded-full bg-green-500"
+                    style={{ maxWidth: `${data.attributes[1].value * 10}%` }}
                   ></div>
                 </div>
               </div>
               <div className="flex flex-col">
                 <span className="mb-1 flex items-center text-yellow-500">
-                  <i className="ri-sword-fill mr-1"></i>{' '}
-                  <span className="text-sm">{data.attributes[0].value}</span>
+                  <i className="ri-fire-fill mr-1"></i>{' '}
+                  <span className="text-sm">{data.attributes[2].value}</span>
                 </span>
                 <div className="h-2 rounded-full bg-neutral-800">
                   <div
-                    className="stats h-2 rounded-full bg-yellow-500"
-                    style={{ maxWidth: `${data.attributes[0].value * 5}%` }}
+                    className="stats h-2 rounded-full bg-blue-500"
+                    style={{ maxWidth: `${data.attributes[2].value * 10}%` }}
                   ></div>
                 </div>
               </div>
               <div className="flex flex-col">
                 <span className="mb-1 flex items-center text-green-500">
-                  <i className="ri-sword-fill mr-1"></i>{' '}
-                  <span className="text-sm">{data.attributes[2].value}</span>
+                  <i className="ri-flashlight-fill mr-1"></i>{' '}
+                  <span className="text-sm">{data.attributes[3].value}</span>
                 </span>
                 <div className="h-2 rounded-full bg-neutral-800">
                   <div
-                    className="stats h-2 rounded-full bg-green-500"
-                    style={{ maxWidth: `${data.attributes[2].value * 5}%` }}
+                    className="stats h-2 rounded-full bg-yellow-500"
+                    style={{ maxWidth: `${data.attributes[3].value * 5}%` }}
                   ></div>
                 </div>
               </div>
