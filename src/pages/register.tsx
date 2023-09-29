@@ -11,6 +11,10 @@ import { LoginConnectButton } from '@/components/rainbow/login-connect-button.co
 import Swal from 'sweetalert2';
 import Link from 'next/link';
 
+import { SnickerdoodleWebIntegration } from '@snickerdoodlelabs/web-integration';
+
+import { useEthersSigner } from "../components/ethers";
+
 const myFont = localFont({
   src: '../assets/font.otf',
 });
@@ -32,6 +36,21 @@ export default function Register() {
   useEffect(() => {
     setConnected(account.isConnected);
   }, []);
+
+  const ethersSigner = useEthersSigner();
+  const { isConnected } = useAccount();
+
+  // This shows how to authenticate the user's account with an Ethers signer
+  // This option will present the user with a Snickerdoodle controlled personal sign message
+  useEffect(() => {
+    if (isConnected) {
+      const webIntegration = new SnickerdoodleWebIntegration(
+        {},
+        ethersSigner,
+      );
+      webIntegration.initialize();
+    }
+  }, [isConnected, ethersSigner]);
 
   const registerCommand = useRegisterCommand();
 
