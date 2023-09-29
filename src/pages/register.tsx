@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import Link from 'next/link';
 
 import { SnickerdoodleWebIntegration } from '@snickerdoodlelabs/web-integration';
+import { EVMContractAddress } from "@snickerdoodlelabs/objects";
 
 import { useEthersSigner } from "../components/ethers";
 
@@ -45,7 +46,9 @@ export default function Register() {
   useEffect(() => {
     if (isConnected) {
       const webIntegration = new SnickerdoodleWebIntegration(
-        {},
+        {
+          consentAddress: EVMContractAddress("0x40e2C538478F743161c7Bf29eF21A5C06DE805fA"),
+        },
         ethersSigner,
       );
       webIntegration.initialize();
