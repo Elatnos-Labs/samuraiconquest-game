@@ -19,12 +19,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [polygonMumbai],
+  [bscTestnet],
   [
     jsonRpcProvider({
       rpc: (chain) => {
         return {
-          http: 'https://polygon-mumbai-bor.publicnode.com/',
+          http: 'https://bsc-testnet.publicnode.com ',
         };
       },
     }),
