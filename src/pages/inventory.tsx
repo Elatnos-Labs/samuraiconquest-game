@@ -1,8 +1,10 @@
+import config from '@/app/config';
 import { AgentCard } from '@/components/inventory/agent.card';
 import { useLayout } from '@/hooks/useLayout';
 import useOutsideAlerter from '@/hooks/useOutsideAlerter';
 import { DefaultLayout } from '@/layouts/default.layout';
 import { useEffect, useRef, useState } from 'react';
+import Moralis from 'moralis';
 
 import HealthPotion from '../assets/health_potion.png';
 import Image from 'next/image';
@@ -10,14 +12,15 @@ import { useAccount } from 'wagmi';
 import useAPI from '@/hooks/useAPI';
 import useJoinWarCommand from '@/features/commands/name-samurai.command';
 import { useAuth } from '@/hooks/useAuth';
-import { BigNumber } from 'alchemy-sdk';
+import { getNFTsOfOwner } from '@/features/api/moralis.api';
+
 
 export default function Inventory() {
   const auth = useAuth();
   const account = useAccount();
   const [inventory, setInventory] = useState([]);
   const [active, setActive] = useState<any>(null);
-  const { alchemy, user } = useAPI();
+  const { user } = useAPI();
 
   const outsideClick = () => {
     if (active) {
@@ -42,10 +45,10 @@ export default function Inventory() {
       return;
     }
 
-    console.log(BigNumber.from(Number(active.tokenId)));
+    //console.log(BigNumber.from(Number(active.tokenId)));
 
     await joinWarCommand.writeAsync({
-      args: [BigNumber.from(Number(active.tokenId))],
+      args: [Number(active.tokenId)],
     });
 
     getInventory();
@@ -54,46 +57,68 @@ export default function Inventory() {
   const { update: updateLayout } = useLayout();
 
   useEffect(() => {
-    updateLayout({
-      messages: true,
-      notifications: true,
-      profile: true,
-      wallet: true,
-      search: true,
-    });
-
-    getInventory();
-  }, []);
+    if (!Moralis.Core.isStarted) {
+      Moralis.start({
+        apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU5MWQ2MzRlLTcwZDctNDBhOS04YjNmLWZmMjQ4YTk0NWFjMyIsIm9yZ0lkIjoiMjUxMDg5IiwidXNlcklkIjoiMjU0NTc1IiwidHlwZSI6IlBST0pFQ1QiLCJ0eXBlSWQiOiI0MmRkYzg0Zi1lOGE3LTRlYjItODBkYy0xY2RkOThkYmFjYzIiLCJpYXQiOjE2OTY2MTUwMjksImV4cCI6NDg1MjM3NTAyOX0.n7sySvai2pdKdR03iyCA-BzGFxPsA5iqiuIWZSw-4ZE"
+      });
+    } else {
+      updateLayout({
+        messages: true,
+        notifications: true,
+        profile: true,
+        wallet: true,
+        search: true,
+      });
+      getInventory();
+    }
+  }, [Moralis.Core.isStarted]);
 
   async function getInventory() {
     if (!account.isConnected) {
       return;
     }
 
-    const [alchemyResponse, inventoryResponse] = await Promise.all([
-      alchemy.getNftsForOwner(account.address),
+    const [moralisResponse, inventoryResponse] = await Promise.all([
+      getNFTsOfOwner(account.address, config.SAMURAI_WARRIORS_ADDRESS),
+
       user.getOwnedNFTs(account.address),
     ]);
 
-    console.log(alchemyResponse.ownedNfts);
+    console.log(moralisResponse.result);
 
-    const _inventory = alchemyResponse.ownedNfts
-      .filter((x) =>
-        x.rawMetadata.attributes.some(
-          (x) => x.trait_type != 'Agility' && x.value != 0,
-        ),
-      )
-      .map((x) => ({
-        tokenId: x.tokenId,
-        title: x.title,
-        name: x.rawMetadata.name,
-        description: x.rawMetadata.description,
-        attack: x.rawMetadata.attributes[0].value,
-        defence: x.rawMetadata.attributes[1].value,
-        chakra: x.rawMetadata.attributes[2].value,
-        agility: x.rawMetadata.attributes[3].value,
-        status: inventoryResponse.some((y) => y == x.tokenId) ? true : false,
-      }));
+    const _inventory = moralisResponse.result
+      .filter((x) => {
+        try {
+          const parsedMetadata = JSON.parse(x.metadata);
+          // Öğenin metadata'sındaki attributes dizisini kontrol et
+          const hasValidAttributes = parsedMetadata.attributes.some((attribute) => {
+            return attribute.trait_type !== 'Agility' && attribute.value !== 0;
+          });
+          return hasValidAttributes;
+        } catch (error) {
+          console.error("Metadata parse hatası:", error);
+          return false; // Hata durumunda bu öğeyi filtrele
+        }
+      })
+      .map((x) => {
+        try {
+          const parsedMetadata = JSON.parse(x.metadata);
+          return {
+            tokenId: x.token_id,
+            title: x.name,
+            name: parsedMetadata.name,
+            description: parsedMetadata.description,
+            attack: parsedMetadata.attributes[0].value,
+            defence: parsedMetadata.attributes[1].value,
+            chakra: parsedMetadata.attributes[2].value,
+            agility: parsedMetadata.attributes[3].value,
+            status: inventoryResponse.some((y) => y == x.token_id) ? true : false,
+          };
+        } catch (error) {
+          console.error("Metadata parse hatası:", error);
+          return null; // Hata durumunda null döndür
+        }
+      })
 
     setInventory(_inventory);
   }

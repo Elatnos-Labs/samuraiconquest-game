@@ -1,7 +1,6 @@
 import useCampCommand from '@/features/commands/camp.command';
 import { useGame } from '@/hooks/useGame';
 import { useRefetchSamuraiV2 } from '@/hooks/useRefetchSamuraiV2';
-import { BigNumber } from 'alchemy-sdk';
 import classNames from 'classnames';
 import { useAccount } from 'wagmi';
 import { waitForTransaction } from 'wagmi/actions';

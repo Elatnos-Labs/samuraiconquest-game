@@ -8,9 +8,10 @@ import useMintCommand from '@/features/commands/mint.command';
 import useOpenboxCommand from '@/features/commands/open-box.command';
 import { useAccount, useWaitForTransaction } from 'wagmi';
 import { useAuth } from '@/hooks/useAuth';
-import { alchemy } from '@/features/api/alchemy.api';
+import { getNFTsOfOwner, getSamuraiWarriorMetadata, getSamuraiWarriorMetadataResync } from '@/features/api/moralis.api';
 import config from '@/app/config';
-import { waitForTransaction } from '@wagmi/core';
+import { Config, waitForTransaction } from '@wagmi/core';
+import Moralis from 'moralis';
 
 export function CrateCard({ minted, setMint, id }: any) {
   const account = useAccount();
@@ -41,26 +42,61 @@ export function CrateCard({ minted, setMint, id }: any) {
     });
   }
 
+  // useEffect(() => {
+  //   if (!openBoxCommand.isSuccess) {
+  //     return;
+  //   }
+
+  //   (async () => {
+  //     const samuraiID = Number(id)
+  //     // const boxResult = await alchemy.nft.getNftMetadata(
+  //     //   config.SAMURAI_WARRIORS_ADDRESS,
+  //     //   id,
+  //     // );
+  //     if (data != null) {
+  //       const boxRes = await getSamuraiWarriorMetadata(samuraiID)
+  //       console.log(id);
+  //       console.log(boxRes);
+  //       console.log(boxRes.normalized_metadata);
+
+  //       setActive(false);
+  //       setData(boxRes.normalized_metadata);
+
+  //       setTimeout(async () => {
+  //         setMint(id);
+  //       }, 1000);
+  //     }
+  //   })();
+  // }, [openBoxCommand.isSuccess, data]);
+
+
   useEffect(() => {
     if (!openBoxCommand.isSuccess) {
       return;
     }
 
     (async () => {
-      const boxResult = await alchemy.nft.getNftMetadata(
-        config.SAMURAI_WARRIORS_ADDRESS,
-        id,
-      );
+      const samuraiID = Number(id);
+      if (data == null) {
+        try {
+          setTimeout(async () => {
+            const boxRes = await getSamuraiWarriorMetadata(samuraiID);
+            const parsedMetadata = JSON.parse(boxRes.metadata);
 
-      setData(boxResult.rawMetadata);
+            setActive(false);
+            setData(parsedMetadata);
+          }, 4000);
 
-      setActive(false);
-
-      setTimeout(() => {
-        setMint(id);
-      }, 1000);
+          setTimeout(async () => {
+            setMint(id);
+          }, 4000);
+        } catch (error) {
+          console.error("Hata oluştu:", error);
+        }
+      }
     })();
   }, [openBoxCommand.isSuccess]);
+
 
   useEffect(() => {
     if (minted == id) {
@@ -119,48 +155,48 @@ export function CrateCard({ minted, setMint, id }: any) {
               <div className="flex flex-col">
                 <span className="mb-1 flex items-center text-red-500">
                   <i className="ri-sword-fill mr-1"></i>{' '}
-                  <span className="text-sm">{data.attributes[0].value}</span>
+                  <span className="text-sm">{data.attributes[0]?.value}</span>
                 </span>
                 <div className="h-2 rounded-full bg-neutral-800">
                   <div
                     className="stats h-2 rounded-full bg-red-500"
-                    style={{ maxWidth: `${data.attributes[0].value * 10}%` }}
+                    style={{ maxWidth: `${data.attributes[0]?.value * 10}%` }}
                   ></div>
                 </div>
               </div>
               <div className="flex flex-col">
                 <span className="mb-1 flex items-center text-blue-500">
                   <i className="ri-shield-fill mr-1"></i>{' '}
-                  <span className="text-sm">{data.attributes[1].value}</span>
+                  <span className="text-sm">{data.attributes[1]?.value}</span>
                 </span>
                 <div className="h-2 rounded-full bg-neutral-800">
                   <div
                     className="stats h-2 rounded-full bg-green-500"
-                    style={{ maxWidth: `${data.attributes[1].value * 10}%` }}
+                    style={{ maxWidth: `${data.attributes[1]?.value * 10}%` }}
                   ></div>
                 </div>
               </div>
               <div className="flex flex-col">
                 <span className="mb-1 flex items-center text-yellow-500">
                   <i className="ri-fire-fill mr-1"></i>{' '}
-                  <span className="text-sm">{data.attributes[2].value}</span>
+                  <span className="text-sm">{data.attributes[2]?.value}</span>
                 </span>
                 <div className="h-2 rounded-full bg-neutral-800">
                   <div
                     className="stats h-2 rounded-full bg-blue-500"
-                    style={{ maxWidth: `${data.attributes[2].value * 10}%` }}
+                    style={{ maxWidth: `${data.attributes[2]?.value * 10}%` }}
                   ></div>
                 </div>
               </div>
               <div className="flex flex-col">
                 <span className="mb-1 flex items-center text-green-500">
                   <i className="ri-flashlight-fill mr-1"></i>{' '}
-                  <span className="text-sm">{data.attributes[3].value}</span>
+                  <span className="text-sm">{data.attributes[3]?.value}</span>
                 </span>
                 <div className="h-2 rounded-full bg-neutral-800">
                   <div
                     className="stats h-2 rounded-full bg-yellow-500"
-                    style={{ maxWidth: `${data.attributes[3].value * 5}%` }}
+                    style={{ maxWidth: `${data.attributes[3]?.value * 5}%` }}
                   ></div>
                 </div>
               </div>
@@ -183,7 +219,7 @@ export function CrateWrapper({ boxs }: any) {
             key={i}
             minted={minted}
             setMint={setMinted}
-            id={box.tokenId}
+            id={box.token_id}
           ></CrateCard>
         );
       })}
@@ -201,16 +237,27 @@ export default function Crate() {
   const [boxs, setBoxs] = useState([]);
 
   useEffect(() => {
-    layout.update({
-      search: false,
-      messages: true,
-      notifications: true,
-      profile: true,
-      wallet: true,
-    });
+    if (Moralis.Core.isStarted) {
+      layout.update({
+        search: false,
+        messages: true,
+        notifications: true,
+        profile: true,
+        wallet: true,
+      });
 
-    updateBoxs();
-  }, []);
+      updateBoxs();
+    }
+  }, [Moralis.Core.isStarted]);
+
+  useEffect(() => {
+    if (!Moralis.Core.isStarted) {
+      Moralis.start({
+        apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU5MWQ2MzRlLTcwZDctNDBhOS04YjNmLWZmMjQ4YTk0NWFjMyIsIm9yZ0lkIjoiMjUxMDg5IiwidXNlcklkIjoiMjU0NTc1IiwidHlwZSI6IlBST0pFQ1QiLCJ0eXBlSWQiOiI0MmRkYzg0Zi1lOGE3LTRlYjItODBkYy0xY2RkOThkYmFjYzIiLCJpYXQiOjE2OTY2MTUwMjksImV4cCI6NDg1MjM3NTAyOX0.n7sySvai2pdKdR03iyCA-BzGFxPsA5iqiuIWZSw-4ZE"
+      });
+    }
+
+  }, [])
 
   useEffect(() => {
     if (!mintCommand.isSuccess) {
@@ -235,11 +282,9 @@ export default function Crate() {
   };
 
   const updateBoxs = async () => {
-    const result = await alchemy.nft.getNftsForOwner(account.address, {
-      contractAddresses: [config.SAMURAI_CARD],
-    });
+    const res = await getNFTsOfOwner(account.address, config.SAMURAI_CARD);
 
-    setBoxs(result.ownedNfts);
+    setBoxs(res.result);
   };
 
   return (

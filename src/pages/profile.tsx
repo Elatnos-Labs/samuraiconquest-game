@@ -8,6 +8,9 @@ import { DefaultLayout } from '@/layouts/default.layout';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
+import { getNFTsOfOwner } from '@/features/api/moralis.api';
+import Moralis from 'moralis';
+
 
 export default function Profile() {
   useAuth();
@@ -30,8 +33,20 @@ export default function Profile() {
     });
 
     fetchUser();
-    getInventory();
+
+
+
   }, []);
+
+  useEffect(() => {
+    if (!Moralis.Core.isStarted) {
+      Moralis.start({
+        apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU5MWQ2MzRlLTcwZDctNDBhOS04YjNmLWZmMjQ4YTk0NWFjMyIsIm9yZ0lkIjoiMjUxMDg5IiwidXNlcklkIjoiMjU0NTc1IiwidHlwZSI6IlBST0pFQ1QiLCJ0eXBlSWQiOiI0MmRkYzg0Zi1lOGE3LTRlYjItODBkYy0xY2RkOThkYmFjYzIiLCJpYXQiOjE2OTY2MTUwMjksImV4cCI6NDg1MjM3NTAyOX0.n7sySvai2pdKdR03iyCA-BzGFxPsA5iqiuIWZSw-4ZE"
+      });
+    } else {
+      getInventory();
+    }
+  }, [Moralis.Core.isStarted])
 
   const fetchUser = async () => {
     const data = await getUser(account.address);
@@ -39,22 +54,22 @@ export default function Profile() {
   };
 
   const getInventory = async () => {
-    const data = await alchemy.alchemy.nft.getNftsForOwner(account.address, {
-      contractAddresses: [config.SAMURAI_WARRIORS_ADDRESS],
-    });
+    const data = await getNFTsOfOwner(account.address, config.SAMURAI_WARRIORS_ADDRESS);
+    console.log(data.result);
 
     setOwnedNFTs(
-      data.ownedNfts.map((nft) => {
+      data.result.map((nft) => {
+        const metadata = JSON.parse(nft.metadata);
         return {
           ...nft,
-          tokenId: nft.tokenId,
-          title: nft.title,
-          name: nft.rawMetadata.name,
-          description: nft.rawMetadata.description,
-          attack: nft.rawMetadata.attributes[0].value,
-          defence: nft.rawMetadata.attributes[1].value,
-          chakra: nft.rawMetadata.attributes[2].value,
-          agility: nft.rawMetadata.attributes[3].value,
+          tokenId: nft.token_id,
+          title: nft.name,
+          name: metadata.name,
+          description: metadata.description,
+          attack: metadata.attributes[0].value,
+          defence: metadata.attributes[1].value,
+          chakra: metadata.attributes[2].value,
+          agility: metadata.attributes[3].value,
         };
       }),
     );

@@ -2,7 +2,6 @@ import useHealCommand from '@/features/commands/heal.command';
 import { useGame } from '@/hooks/useGame';
 import { useRefetchSamuraiV2 } from '@/hooks/useRefetchSamuraiV2';
 import { waitForTransaction } from 'wagmi/actions';
-import { BigNumber } from 'alchemy-sdk';
 import classNames from 'classnames';
 import { useAccount } from 'wagmi';
 
