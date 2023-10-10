@@ -530,8 +530,7 @@ export function Map() {
                       Governance:
                     </span>
                     <span className="text-base">
-                      {game.lands.find((x) => x.id == game.land.clan)?.name ||
-                        'Neutral zone'}
+                      {game.land.owner === "0" ? 'Neutral Zone' : game.land.owner === "1" ? "Yamatai" : game.land.owner === "2" ? "Tempest" : game.land.owner === "3" ? "Yurei" : ''}
                     </span>
                   </div>
                 </div>
@@ -575,7 +574,7 @@ export function Map() {
             </div>
           </div>
 
-          {game.land?.lastWarTime != 0 && (
+          {game.land?.attackerClan != 0 && (
             <div className="mt-6">
               <div className="grid grid-cols-3 items-center justify-between gap-4 rounded-xl bg-neutral-950/50 px-6 py-6">
                 <div className="col-span-1 flex flex-col">
@@ -656,7 +655,8 @@ export function Map() {
             </div>
           )}
 
-          {game.land.attackerClan != 0 && (
+          {/* bu kısım saldıran savunan nftlerimizi de listeliyor daha sonra açılabilir */}
+          {/* {game.land.attackerClan != 0 && (
             <>
               <div className="mt-6">
                 <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl bg-neutral-950/50 px-6 py-6">
@@ -725,7 +725,7 @@ export function Map() {
                 </div>
               </div>
             </>
-          )}
+          )} */}
           <div className="mt-auto">
             <div className="mt-auto grid grid-cols-3 gap-3">
               {game.samurai &&
@@ -787,13 +787,13 @@ export function Map() {
               {game.samurai &&
                 game.land &&
                 game.samurai.Location == game.land.id &&
-                user.user.clan == game.land.clan && (
+                user.user.clan == Number(game.land.owner) && (
                   <CollectCommandButton></CollectCommandButton>
                 )}
               {game.samurai &&
                 game.land &&
                 game.samurai.Location == game.land.id &&
-                user.user.clan == game.land.clan && (
+                user.user.clan == Number(game.land.owner) && (
                   <DropButtonCommand></DropButtonCommand>
                 )}
               {game.samurai &&
