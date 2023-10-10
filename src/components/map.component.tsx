@@ -743,6 +743,7 @@ export function Map() {
                 game.samurai.DeploymentTime != 0 && (
                   <UndeployCommandButton></UndeployCommandButton>
                 )}
+
               {game.samurai &&
                 game.land &&
                 game.samurai?.Location != game.land.id &&
@@ -752,17 +753,33 @@ export function Map() {
                   game.lands.find((x) => x.id == game.samurai?.Location),
                   game.land,
                 ) &&
-                (game.lands.find((x) => x.id == game.samurai.Location)?.id ==
-                  game.clans.find((x) => x.ID == user.user.clan)
-                    ?.baseLocation ||
-                  game.land.id ==
-                  game.clans.find((x) => x.ID == user.user.clan)
-                    ?.baseLocation) && (
+
+                // (game.lands.find((x) => x.id == game.samurai.Location)?.id ==
+                //   game.clans.find((x) => x.ID == user.user.clan)
+                //     ?.baseLocation
+                //   ||
+                //   game.land.id ==
+                //   game.clans.find((x) => x.ID == user.user.clan)
+                //     ?.baseLocation) && (
+                //   <MoveCommandButton></MoveCommandButton>
+                // )
+                (game.lands.find((x) => x.id == game.samurai.Location)?.owner ==
+                  String(user.user?.clan)
+                  // ||
+                  // (
+                  //   game.land.id ==
+                  //   game.clans.find((x) => x.ID == user.user.clan)
+                  //     ?.baseLocation
+
+                ) && (
                   <MoveCommandButton></MoveCommandButton>
-                )}
+                )
+              }
+
               {game.samurai &&
                 game.land &&
                 game.samurai.Location == game.land.id &&
+                game.samurai.CampTime == 0 &&
                 game.clans.find((x) => x.ID == user.user.clan)?.baseLocation ==
                 game.samurai?.Location && (
                   <HealCommandButton></HealCommandButton>
@@ -782,14 +799,17 @@ export function Map() {
               {game.samurai &&
                 game.land &&
                 game.samurai.Location == game.land.id &&
-                user.user.clan == game.land.clan &&
-                game.samurai.CampTime == 0 && (
+                String(user.user.clan) == game.land.owner &&
+                game.samurai.CampTime == 0 &&
+                game.samurai.DeploymentTime == 0 &&
+
+                (
                   <CampCommandButton></CampCommandButton>
                 )}
               {game.samurai &&
                 game.land &&
-                game.samurai.Location == game.land.id &&
-                user.user.clan == game.land.clan &&
+                // game.samurai.Location == game.land.id &&
+                // user.user.clan == game.land.clan &&
                 game.samurai.CampTime != 0 && (
                   <UncampCommandButton></UncampCommandButton>
                 )}

@@ -10,6 +10,7 @@ export type LandState = {
   war_id: number;
   id: number;
   name: string;
+  owner: string;
   desc: string;
   uri: string;
   value: number;
