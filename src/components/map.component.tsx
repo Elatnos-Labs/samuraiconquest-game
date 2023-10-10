@@ -583,8 +583,8 @@ export function Map() {
                     <i className="ri-sword-fill mb-1 text-2xl"></i>
                     <span className="font-medium">
                       {
-                        game.lands.find((x) => x.id == game.land.attackerClan)
-                          .name
+                        game.lands.find((x) => x.id == game.land.attackerClan)?.name
+
                       }
                     </span>
                   </div>
@@ -609,7 +609,7 @@ export function Map() {
                   <div className="flex h-full flex-col items-center">
                     <i className="ri-shield-fill mb-1 text-2xl"></i>
                     <span className="whitespace-pre-line font-medium">
-                      {game.lands.find((x) => x.id == game.land.clan).name}
+                      {game.lands.find((x) => x.id == game.land.clan)?.name}
                     </span>
                   </div>
                 </div>
