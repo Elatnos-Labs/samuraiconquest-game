@@ -12,89 +12,85 @@ export function useRefetchSamuraiV2() {
         {
           inputs: [
             {
-              internalType: 'uint256',
-              name: '_id',
-              type: 'uint256',
-            },
+              internalType: "uint256",
+              name: "_id",
+              type: "uint256"
+            }
           ],
-          name: 'viewSamurai',
+          name: "viewSamurai",
           outputs: [
             {
               components: [
                 {
-                  internalType: 'uint256',
-                  name: 'season',
-                  type: 'uint256',
+                  internalType: "uint256",
+                  name: "season",
+                  type: "uint256"
                 },
                 {
-                  internalType: 'uint256',
-                  name: 'lightStones',
-                  type: 'uint256',
+                  internalType: "uint256",
+                  name: "lightStones",
+                  type: "uint256"
                 },
                 {
-                  internalType: 'uint256',
-                  name: 'campTime',
-                  type: 'uint256',
+                  internalType: "uint256",
+                  name: "campTime",
+                  type: "uint256"
                 },
                 {
-                  internalType: 'uint256',
-                  name: 'deploymentTime',
-                  type: 'uint256',
+                  internalType: "uint256",
+                  name: "deploymentTime",
+                  type: "uint256"
                 },
                 {
-                  internalType: 'address',
-                  name: 'owner',
-                  type: 'address',
+                  internalType: "address",
+                  name: "owner",
+                  type: "address"
                 },
                 {
-                  internalType: 'uint8',
-                  name: 'location',
-                  type: 'uint8',
+                  internalType: "uint8",
+                  name: "location",
+                  type: "uint8"
                 },
                 {
-                  internalType: 'uint8',
-                  name: 'attack',
-                  type: 'uint8',
+                  internalType: "uint8",
+                  name: "attack",
+                  type: "uint8"
                 },
                 {
-                  internalType: 'uint8',
-                  name: 'defence',
-                  type: 'uint8',
+                  internalType: "uint8",
+                  name: "defence",
+                  type: "uint8"
                 },
                 {
-                  internalType: 'uint8',
-                  name: 'chakra',
-                  type: 'uint8',
+                  internalType: "uint8",
+                  name: "chakra",
+                  type: "uint8"
                 },
                 {
-                  internalType: 'uint8',
-                  name: 'maxAgility',
-                  type: 'uint8',
+                  internalType: "uint8",
+                  name: "maxAgility",
+                  type: "uint8"
                 },
                 {
-                  internalType: 'uint8',
-                  name: 'currentAgility',
-                  type: 'uint8',
+                  internalType: "uint8",
+                  name: "currentAgility",
+                  type: "uint8"
                 },
                 {
-                  internalType: 'bool',
-                  name: 'isInjured',
-                  type: 'bool',
-                },
-                {
-                  internalType: 'uint8',
-                  name: 'status',
-                  type: 'uint8',
-                },
+                  internalType: "uint8",
+                  name: "status",
+                  type: "uint8"
+                }
               ],
-              internalType: 'struct Registration.Samurai',
-              name: '',
-              type: 'tuple',
-            },
+              internalType: "struct Registration.Samurai",
+              name: "",
+              type: "tuple"
+            }
           ],
-          stateMutability: 'view',
-          type: 'function',
-        },
+          stateMutability: "view",
+          type: "function"
+        }
+
       ],
       functionName: 'viewSamurai',
       args: [BigInt(Number(id))],
@@ -110,7 +106,7 @@ export function useRefetchSamuraiV2() {
       CurrentAgility: Number(contract.currentAgility),
       Location: Number(contract.location),
       Status: Number(contract.status),
-      IsInjured: contract.isInjured,
+      // IsInjured: contract.isInjured,
       CampTime: Number(contract.campTime),
       DeploymentTime: Number(contract.deploymentTime),
       Owner: contract.owner,

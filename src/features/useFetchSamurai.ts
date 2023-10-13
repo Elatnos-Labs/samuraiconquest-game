@@ -110,7 +110,7 @@ export function useFetchSamurai({ id, onSuccess }) {
         CurrentAgility: Number(data.currentAgility),
         Location: Number(data.location),
         Status: Number(data.status),
-        IsInjured: data.isInjured,
+        // IsInjured: data.isInjured,
         CampTime: Number(data.campTime),
         DeploymentTime: Number(data.deploymentTime),
         Owner: data.owner,

@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { DeployCommandButton } from './commands/deploy-command.button';
 import { MoveCommandButton } from './commands/move-command.button';
-import { HealCommandButton } from './commands/heal-command.button';
+// import { HealCommandButton } from './commands/heal-command.button';
 import { CampCommandButton } from './commands/camp-command.button';
 import { useGame } from '@/hooks/useGame';
 import { UncampCommandButton } from './commands/uncamp-command.button';
@@ -71,8 +71,9 @@ export function LandCard() {
                 : 'text-green-500')
             }
           >
-            <span>Health: </span>
-            {game.samurai?.IsInjured ? 'Injured' : 'Healtly'}
+            <span >Health: </span>
+            {/* {game.samurai?.IsInjured ? 'Injured' : 'Healthy'} */}
+            Healthy
           </p>
           <p className="mt-1 text-sm">
             <span>Status: </span>
@@ -206,89 +207,85 @@ export function Map() {
       {
         inputs: [
           {
-            internalType: 'uint256',
-            name: '_id',
-            type: 'uint256',
-          },
+            internalType: "uint256",
+            name: "_id",
+            type: "uint256"
+          }
         ],
-        name: 'viewSamurai',
+        name: "viewSamurai",
         outputs: [
           {
             components: [
               {
-                internalType: 'uint256',
-                name: 'season',
-                type: 'uint256',
+                internalType: "uint256",
+                name: "season",
+                type: "uint256"
               },
               {
-                internalType: 'uint256',
-                name: 'lightStones',
-                type: 'uint256',
+                internalType: "uint256",
+                name: "lightStones",
+                type: "uint256"
               },
               {
-                internalType: 'uint256',
-                name: 'campTime',
-                type: 'uint256',
+                internalType: "uint256",
+                name: "campTime",
+                type: "uint256"
               },
               {
-                internalType: 'uint256',
-                name: 'deploymentTime',
-                type: 'uint256',
+                internalType: "uint256",
+                name: "deploymentTime",
+                type: "uint256"
               },
               {
-                internalType: 'address',
-                name: 'owner',
-                type: 'address',
+                internalType: "address",
+                name: "owner",
+                type: "address"
               },
               {
-                internalType: 'uint8',
-                name: 'location',
-                type: 'uint8',
+                internalType: "uint8",
+                name: "location",
+                type: "uint8"
               },
               {
-                internalType: 'uint8',
-                name: 'attack',
-                type: 'uint8',
+                internalType: "uint8",
+                name: "attack",
+                type: "uint8"
               },
               {
-                internalType: 'uint8',
-                name: 'defence',
-                type: 'uint8',
+                internalType: "uint8",
+                name: "defence",
+                type: "uint8"
               },
               {
-                internalType: 'uint8',
-                name: 'chakra',
-                type: 'uint8',
+                internalType: "uint8",
+                name: "chakra",
+                type: "uint8"
               },
               {
-                internalType: 'uint8',
-                name: 'maxAgility',
-                type: 'uint8',
+                internalType: "uint8",
+                name: "maxAgility",
+                type: "uint8"
               },
               {
-                internalType: 'uint8',
-                name: 'currentAgility',
-                type: 'uint8',
+                internalType: "uint8",
+                name: "currentAgility",
+                type: "uint8"
               },
               {
-                internalType: 'bool',
-                name: 'isInjured',
-                type: 'bool',
-              },
-              {
-                internalType: 'uint8',
-                name: 'status',
-                type: 'uint8',
-              },
+                internalType: "uint8",
+                name: "status",
+                type: "uint8"
+              }
             ],
-            internalType: 'struct Registration.Samurai',
-            name: '',
-            type: 'tuple',
-          },
+            internalType: "struct Registration.Samurai",
+            name: "",
+            type: "tuple"
+          }
         ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+        stateMutability: "view",
+        type: "function"
+      }
+
     ],
     functionName: 'viewSamurai',
     args: [BigInt(Number(selectedAgent))],
@@ -305,7 +302,7 @@ export function Map() {
         CurrentAgility: Number(data.currentAgility),
         Location: Number(data.location),
         Status: Number(data.status),
-        IsInjured: data.isInjured,
+        // IsInjured: data.isInjured,
         CampTime: Number(data.campTime),
         DeploymentTime: Number(data.deploymentTime),
         Owner: data.owner,
@@ -466,7 +463,7 @@ export function Map() {
           <DeckItem
             onClick={(id: number, samurai: any) => {
               onAgentSelect(id);
-              eventEmitter.emit('selectArea', samurai.Location);
+              eventEmitter.emit('selectArea', samurai?.Location);
             }}
             key={i}
             id={x}
@@ -764,26 +761,30 @@ export function Map() {
                 //   <MoveCommandButton></MoveCommandButton>
                 // )
                 (game.lands.find((x) => x.id == game.samurai.Location)?.owner ==
-                  String(user.user?.clan)
+                  String(user.user?.clan) ||
                   // ||
                   // (
                   //   game.land.id ==
                   //   game.clans.find((x) => x.ID == user.user.clan)
                   //     ?.baseLocation
-
+                  game.lands.find((x) => x.id == game.land.id)?.owner ==
+                  String(user.user?.clan)
                 ) && (
                   <MoveCommandButton></MoveCommandButton>
                 )
+
               }
 
-              {game.samurai &&
+              {/* {game.samurai &&
                 game.land &&
                 game.samurai.Location == game.land.id &&
                 game.samurai.CampTime == 0 &&
                 game.clans.find((x) => x.ID == user.user.clan)?.baseLocation ==
                 game.samurai?.Location && (
                   <HealCommandButton></HealCommandButton>
-                )}
+                )} */}
+
+
               {game.samurai &&
                 game.land &&
                 game.samurai.Location == game.land.id &&
