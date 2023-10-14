@@ -1,7 +1,7 @@
 import { useLayout } from '@/hooks/useLayout';
 import { DefaultLayout } from '@/layouts/default.layout';
-import { useEffect, useState } from 'react';
-
+import { use, useEffect, useState } from 'react';
+import axios from 'axios';
 import { Player } from '@lottiefiles/react-lottie-player';
 import Comment from '@/assets/lottie/Comment.json';
 import { useAccount } from 'wagmi';
@@ -15,6 +15,9 @@ export default function Reference() {
   const { refer } = useAPI();
   const [topRefers, setTopRefers] = useState([]);
   const [invites, setInvites] = useState([]);
+  const [userdata , setUser] = useState([])
+
+
 
   useEffect(() => {
     layout.update({
@@ -25,7 +28,9 @@ export default function Reference() {
       wallet: true,
     });
 
-    updateTopRefers();
+    //updateTopRefers();
+    getData();
+    getUserData();
   }, []);
 
   const updateTopRefers = async () => {
@@ -33,10 +38,20 @@ export default function Reference() {
     setTopRefers(data);
   };
 
-  const updateInvites = async () => {
-    const data = await refer.getRefer(account.address);
-    setInvites(data);
-  };
+
+  const getData = async()=>{
+    const res = await axios.get(
+      "https://api.samuraiconquest.com/refer/" + account.address)
+     setInvites(res.data)
+
+  }
+
+  const getUserData = async()=>{
+    const res = await axios.get(
+      "https://api.samuraiconquest.com/user/" + account.address)
+      setUser(res.data)
+
+  }
 
   const handleClick = () => {
     const currentDomain = window.location.origin;
@@ -52,10 +67,10 @@ export default function Reference() {
         <div className="col-span-3 h-full">
           <div className="flex h-full flex-col gap-4 rounded-md bg-neutral-950/30 px-6 py-4 backdrop-blur-2xl">
             <h2 className="mb-2 text-xl font-medium">Your Account</h2>
-            <p>
+         {/*   <p>
               In order to track your ZETA points, you must verify your wallet
               and Twitter.
-            </p>
+  </p>*/}
 
             <div className="mt-12 flex flex-col">
               <ul className="flex flex-col gap-2">
@@ -64,7 +79,7 @@ export default function Reference() {
                     <span>
                       <b>Nickname:</b>
                     </span>
-                    <span className="ml-auto text-lg">Aloshai</span>
+                    <span className="ml-auto text-lg">{userdata.length > 0 ? userdata[0].nickName:''}</span>
                   </div>
                 </li>
                 <li>
@@ -72,20 +87,20 @@ export default function Reference() {
                     <span>
                       <b>Invite Point:</b>
                     </span>
-                    <span className="ml-auto text-lg">73</span>
+                    <span className="ml-auto text-lg">{invites.length}</span>
                   </div>
                 </li>
               </ul>
             </div>
 
-            <div className="mt-auto flex flex-col gap-2">
-              <button
+            <div className="mt-auto flex flex-col gap-1">
+             {/* <button
                 onClick={handleClick}
                 className="rounded bg-blue-500/50 px-6 py-3 font-medium backdrop-blur-2xl"
               >
                 <i className="ri-twitter-fill mr-2"></i>
                 Share on Twitter
-              </button>
+            </button>*/}
 
               <button
                 onClick={handleClick}
