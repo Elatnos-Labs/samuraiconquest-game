@@ -1,13 +1,19 @@
-import { Map } from '@/components/map.component';
 import { useAuth } from '@/hooks/useAuth';
 import { useLayout } from '@/hooks/useLayout';
 import { DefaultLayout } from '@/layouts/default.layout';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+const Map = dynamic(() => import('@/components/map.component'), {
+  ssr: false,
+});
 
 export default function Home() {
   const auth = useAuth();
   const { update: updateLayout } = useLayout();
+
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     updateLayout({
@@ -17,6 +23,14 @@ export default function Home() {
       wallet: true,
       search: false,
     });
+
+    setMounted(true);
+
+    console.log('mounted');
+
+    return () => {
+      setMounted(false);
+    };
   }, []);
 
   if (!auth.user.user.isLogged) {
@@ -31,7 +45,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Map></Map>
+      {mounted && <Map></Map>}
     </>
   );
 }

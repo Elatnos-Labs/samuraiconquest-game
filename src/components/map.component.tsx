@@ -184,7 +184,7 @@ export function DeckItem({ id, onClick }) {
   );
 }
 
-export function Map() {
+export default function Map() {
   const user = useUser();
   const [area, setArea] = useState(null);
   const [sideMeshes, setSideMeshes] = useState([]);
@@ -1066,8 +1066,6 @@ async function setup({
     controls.maxAzimuthAngle = Math.PI / 2;
     controls.maxZoom = 1.5;
 
-    window.addEventListener('resize', onWindowResize);
-
     const re = new THREE.AmbientLight(0xececec, 0.7);
     re.position.set(0, 200, 0);
     scene.add(re);
@@ -1318,12 +1316,6 @@ async function setup({
     group.position.z = 50;
     group.position.x = -110;
     scene.add(group);
-  }
-
-  function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-
-    renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
   function animate() {
