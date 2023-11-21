@@ -205,15 +205,7 @@ export default function Register() {
             <i className="ri-newspaper-fill text-2xl"></i>
           </Link>
 
-          <div className="relative z-40 ml-auto flex h-12 items-center justify-center overflow-hidden rounded-full bg-neutral-950/50 px-32">
-            <div
-              style={{
-                clipPath: 'polygon(0 0, 100% 0%, 75% 100%, 0% 100%)',
-              }}
-              className="absolute left-0 h-full w-1/2 bg-blue-500/40"
-            ></div>
-           {/* <span className="z-50">Donate</span>*/}
-          </div>
+         
         </div>
       </div>
     </div>
