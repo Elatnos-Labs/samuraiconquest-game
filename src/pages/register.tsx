@@ -4,7 +4,7 @@ import useRegisterCommand from '@/features/commands/register.command';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 import localFont from 'next/font/local';
 import { useAuth } from '@/hooks/useAuth';
 import { LoginConnectButton } from '@/components/rainbow/login-connect-button.component';
@@ -12,9 +12,10 @@ import Swal from 'sweetalert2';
 import Link from 'next/link';
 
 import { SnickerdoodleWebIntegration } from '@snickerdoodlelabs/web-integration';
-import { EVMContractAddress } from "@snickerdoodlelabs/objects";
+import { EVMContractAddress } from '@snickerdoodlelabs/objects';
 
-import { useEthersSigner } from "../components/ethers";
+import { useEthersSigner } from '../components/ethers';
+import { bscTestnet } from 'wagmi/chains';
 
 const myFont = localFont({
   src: '../assets/font.otf',
@@ -40,6 +41,7 @@ export default function Register() {
 
   const ethersSigner = useEthersSigner();
   const { isConnected } = useAccount();
+  const network = useNetwork();
 
   // This shows how to authenticate the user's account with an Ethers signer
   // This option will present the user with a Snickerdoodle controlled personal sign message
@@ -47,7 +49,9 @@ export default function Register() {
     if (isConnected) {
       const webIntegration = new SnickerdoodleWebIntegration(
         {
-          consentAddress: EVMContractAddress("0x40e2C538478F743161c7Bf29eF21A5C06DE805fA"),
+          consentAddress: EVMContractAddress(
+            '0x40e2C538478F743161c7Bf29eF21A5C06DE805fA',
+          ),
         },
         ethersSigner,
       );
@@ -101,12 +105,23 @@ export default function Register() {
             Samurai Conquest
           </div>
           <p className="mt-4">
-            Legendary battle where strategy and NFT meet! Embark on an adventure full of politics and strategy in this game where each kingdom has its own community. Kingdoms act together with their communities as they develop Defensive, Offensive and Farming strategies on the hexagonal game map. Players must regularly move to certain hexagons, defending, farming or attacking territories, as if moving chess pieces. In the game, kingdoms must manage their resources effectively and capture the map. Once a hexagon is captured, it must be both defended and developed. The main goal in the universe is not just to attack, but to develop a strategy.
+            Legendary battle where strategy and NFT meet! Embark on an adventure
+            full of politics and strategy in this game where each kingdom has
+            its own community. Kingdoms act together with their communities as
+            they develop Defensive, Offensive and Farming strategies on the
+            hexagonal game map. Players must regularly move to certain hexagons,
+            defending, farming or attacking territories, as if moving chess
+            pieces. In the game, kingdoms must manage their resources
+            effectively and capture the map. Once a hexagon is captured, it must
+            be both defended and developed. The main goal in the universe is not
+            just to attack, but to develop a strategy.
           </p>
         </div>
         <div className="col-span-2 flex items-center justify-center rounded-md border border-violet-500/10 bg-neutral-950/20 px-8 py-6 backdrop-blur-3xl">
-          {!connected && <LoginConnectButton></LoginConnectButton>}
-          {connected && (
+          {(!connected || network.chain?.id != bscTestnet.id) && (
+            <LoginConnectButton></LoginConnectButton>
+          )}
+          {connected && network.chain && network.chain.id == bscTestnet.id && (
             <div className="flex h-full w-full flex-col gap-8">
               <div className={'text-4xl text-white ' + myFont.className}>
                 Nickname
@@ -138,7 +153,8 @@ export default function Register() {
           <Link
             active-class="!text-violet-500"
             href="https://linktr.ee/samuraiconquest"
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
           >
             <i className="ri-links-line text-2xl"></i>
@@ -146,7 +162,8 @@ export default function Register() {
           <Link
             active-class="!text-violet-500"
             href="https://samuraiconquest.com/"
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
           >
             <i className="ri-pages-fill text-2xl"></i>
@@ -154,7 +171,8 @@ export default function Register() {
           <Link
             active-class="!text-violet-500"
             href="https://twitter.com/ConquestSamurai"
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
           >
             <i className="ri-twitter-fill text-2xl"></i>
@@ -162,7 +180,8 @@ export default function Register() {
           <Link
             active-class="!text-violet-500"
             href="https://discord.gg/wkdUvWEv"
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
           >
             <i className="ri-discord-fill text-2xl"></i>
@@ -170,7 +189,8 @@ export default function Register() {
           <Link
             active-class="!text-violet-500"
             href="https://t.me/samuraiconquestofficial"
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
           >
             <i className="ri-telegram-line text-2xl"></i>
@@ -178,7 +198,8 @@ export default function Register() {
           <Link
             active-class="!text-violet-500"
             href="https://drive.google.com/file/d/1bGhG1iwm43-XcNAl1Z7V5quyUv13jfkd/view"
-            target="_blank" rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-950/50"
           >
             <i className="ri-newspaper-fill text-2xl"></i>

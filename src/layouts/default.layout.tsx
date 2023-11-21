@@ -4,7 +4,8 @@ import { Aside } from '@/components/layout/aside.component';
 import { Navbar } from '@/components/layout/navbar.component';
 import { useLayout } from '@/hooks/useLayout';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { bscTestnet } from 'wagmi/chains';
 
 export type DefaultLayoutProps = {
   children: JSX.Element;
@@ -12,10 +13,25 @@ export type DefaultLayoutProps = {
 
 export function DefaultLayout({ children }: DefaultLayoutProps) {
   const account = useAccount();
+  const network = useNetwork();
   const layout = useLayout();
+
+  const switchNetwork = useSwitchNetwork();
 
   return (
     <>
+      {!!network.chain && network.chain.id != bscTestnet.id && (
+        <div className="fixed inset-0 z-[9999999] flex w-full items-center justify-center bg-black text-white">
+          <button
+            onClick={() => {
+              switchNetwork.switchNetworkAsync(bscTestnet.id);
+            }}
+            className="rounded bg-red-500 px-6 py-4 text-white"
+          >
+            CHANGE YOUR NETWORK TO BSC TESTNET
+          </button>
+        </div>
+      )}
       <div className="sticky top-10 mx-auto flex h-full w-full max-w-screen-lg justify-center">
         <div
           className={`absolute h-[500px] w-[500px] blur-[500px] transition-all duration-1000 bg-${layout.layout.color}-500`}

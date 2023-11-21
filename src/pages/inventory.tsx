@@ -14,7 +14,6 @@ import useJoinWarCommand from '@/features/commands/name-samurai.command';
 import { useAuth } from '@/hooks/useAuth';
 import { getNFTsOfOwner } from '@/features/api/moralis.api';
 
-
 export default function Inventory() {
   const auth = useAuth();
   const account = useAccount();
@@ -59,7 +58,8 @@ export default function Inventory() {
   useEffect(() => {
     if (!Moralis.Core.isStarted) {
       Moralis.start({
-        apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU5MWQ2MzRlLTcwZDctNDBhOS04YjNmLWZmMjQ4YTk0NWFjMyIsIm9yZ0lkIjoiMjUxMDg5IiwidXNlcklkIjoiMjU0NTc1IiwidHlwZSI6IlBST0pFQ1QiLCJ0eXBlSWQiOiI0MmRkYzg0Zi1lOGE3LTRlYjItODBkYy0xY2RkOThkYmFjYzIiLCJpYXQiOjE2OTY2MTUwMjksImV4cCI6NDg1MjM3NTAyOX0.n7sySvai2pdKdR03iyCA-BzGFxPsA5iqiuIWZSw-4ZE"
+        apiKey:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU5MWQ2MzRlLTcwZDctNDBhOS04YjNmLWZmMjQ4YTk0NWFjMyIsIm9yZ0lkIjoiMjUxMDg5IiwidXNlcklkIjoiMjU0NTc1IiwidHlwZSI6IlBST0pFQ1QiLCJ0eXBlSWQiOiI0MmRkYzg0Zi1lOGE3LTRlYjItODBkYy0xY2RkOThkYmFjYzIiLCJpYXQiOjE2OTY2MTUwMjksImV4cCI6NDg1MjM3NTAyOX0.n7sySvai2pdKdR03iyCA-BzGFxPsA5iqiuIWZSw-4ZE',
       });
     } else {
       updateLayout({
@@ -84,19 +84,23 @@ export default function Inventory() {
       user.getOwnedNFTs(account.address),
     ]);
 
-    console.log(moralisResponse.result);
+    console.log(moralisResponse);
 
     const _inventory = moralisResponse.result
       .filter((x) => {
         try {
           const parsedMetadata = JSON.parse(x.metadata);
           // Öğenin metadata'sındaki attributes dizisini kontrol et
-          const hasValidAttributes = parsedMetadata.attributes.some((attribute) => {
-            return attribute.trait_type !== 'Agility' && attribute.value !== 0;
-          });
+          const hasValidAttributes = parsedMetadata.attributes.some(
+            (attribute) => {
+              return (
+                attribute.trait_type !== 'Agility' && attribute.value !== 0
+              );
+            },
+          );
           return hasValidAttributes;
         } catch (error) {
-          console.error("Metadata parse hatası:", error);
+          console.error('Metadata parse hatası:', error);
           return false; // Hata durumunda bu öğeyi filtrele
         }
       })
@@ -112,13 +116,15 @@ export default function Inventory() {
             defence: parsedMetadata.attributes[1].value,
             chakra: parsedMetadata.attributes[2].value,
             agility: parsedMetadata.attributes[3].value,
-            status: inventoryResponse.some((y) => y == x.token_id) ? true : false,
+            status: inventoryResponse.some((y) => y == x.token_id)
+              ? true
+              : false,
           };
         } catch (error) {
-          console.error("Metadata parse hatası:", error);
+          console.error('Metadata parse hatası:', error);
           return null; // Hata durumunda null döndür
         }
-      })
+      });
 
     setInventory(_inventory);
   }
@@ -146,7 +152,12 @@ export default function Inventory() {
         <div className="inventory-left-in">
           <h1 className="text-2xl font-semibold text-white">Inventory</h1>
           <p className="mt-2 w-full text-sm text-neutral-300 lg:w-2/3">
-            Unleash the power of the Samurai onto the battlefield! Harnessing their unparalleled combat skills and rich heritage, these noble warriors are poised to become legendary forces in the heat of battle. Now, beckon forth these honorable fighters and transform the gleam of their swords into an epic saga that will crown your triumph!
+            Unleash the power of the Samurai onto the battlefield! Harnessing
+            their unparalleled combat skills and rich heritage, these noble
+            warriors are poised to become legendary forces in the heat of
+            battle. Now, beckon forth these honorable fighters and transform the
+            gleam of their swords into an epic saga that will crown your
+            triumph!
           </p>
 
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -168,8 +179,9 @@ export default function Inventory() {
         </div>
       </div>
       <div
-        className={`fixed right-0 top-0 h-full w-2/3 lg:sticky lg:w-1/3 ${active ? 'pointer-events-auto' : 'pointer-events-none'
-          }`}
+        className={`fixed right-0 top-0 h-full w-2/3 lg:sticky lg:w-1/3 ${
+          active ? 'pointer-events-auto' : 'pointer-events-none'
+        }`}
         ref={modal}
       >
         {active && (
