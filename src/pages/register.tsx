@@ -212,7 +212,7 @@ export default function Register() {
               }}
               className="absolute left-0 h-full w-1/2 bg-blue-500/40"
             ></div>
-            <span className="z-50">Donate</span>
+           {/* <span className="z-50">Donate</span>*/}
           </div>
         </div>
       </div>
