@@ -11,7 +11,6 @@ import { useAccount } from 'wagmi';
 import { getNFTsOfOwner } from '@/features/api/moralis.api';
 import Moralis from 'moralis';
 
-
 export default function Profile() {
   useAuth();
   const account = useAccount();
@@ -33,20 +32,18 @@ export default function Profile() {
     });
 
     fetchUser();
-
-
-
   }, []);
 
   useEffect(() => {
     if (!Moralis.Core.isStarted) {
       Moralis.start({
-        apiKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU5MWQ2MzRlLTcwZDctNDBhOS04YjNmLWZmMjQ4YTk0NWFjMyIsIm9yZ0lkIjoiMjUxMDg5IiwidXNlcklkIjoiMjU0NTc1IiwidHlwZSI6IlBST0pFQ1QiLCJ0eXBlSWQiOiI0MmRkYzg0Zi1lOGE3LTRlYjItODBkYy0xY2RkOThkYmFjYzIiLCJpYXQiOjE2OTY2MTUwMjksImV4cCI6NDg1MjM3NTAyOX0.n7sySvai2pdKdR03iyCA-BzGFxPsA5iqiuIWZSw-4ZE"
+        apiKey:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjU5MWQ2MzRlLTcwZDctNDBhOS04YjNmLWZmMjQ4YTk0NWFjMyIsIm9yZ0lkIjoiMjUxMDg5IiwidXNlcklkIjoiMjU0NTc1IiwidHlwZSI6IlBST0pFQ1QiLCJ0eXBlSWQiOiI0MmRkYzg0Zi1lOGE3LTRlYjItODBkYy0xY2RkOThkYmFjYzIiLCJpYXQiOjE2OTY2MTUwMjksImV4cCI6NDg1MjM3NTAyOX0.n7sySvai2pdKdR03iyCA-BzGFxPsA5iqiuIWZSw-4ZE',
       });
     } else {
       getInventory();
     }
-  }, [Moralis.Core.isStarted])
+  }, [Moralis.Core.isStarted]);
 
   const fetchUser = async () => {
     const data = await getUser(account.address);
@@ -54,7 +51,10 @@ export default function Profile() {
   };
 
   const getInventory = async () => {
-    const data = await getNFTsOfOwner(account.address, config.SAMURAI_WARRIORS_ADDRESS);
+    const data = await getNFTsOfOwner(
+      account.address,
+      config.SAMURAI_WARRIORS_ADDRESS,
+    );
     console.log(data.result);
 
     setOwnedNFTs(
@@ -205,7 +205,7 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* <div className="col-span-2 lg:col-span-1">
+      <div className="col-span-2 lg:col-span-1">
         <div className="flex flex-col gap-4">
           <div className="flex w-full flex-col items-center rounded-xl border border-violet-500/10 bg-neutral-900/20 px-6 py-4 backdrop-blur-xl">
             <h2 className="w-full text-left text-xl font-medium">
@@ -287,8 +287,8 @@ export default function Profile() {
               </div>
             </div>
           </div>
-        </div> 
-      </div>*/}
+        </div>
+      </div>
     </div>
   );
 }
